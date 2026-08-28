@@ -1,0 +1,501 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+body{
+    background-image:url('https://file.garden/aZo5FVsRbiDb3nc-/finland/Eduskunta_istuntosali.jpg');
+    background-attachment:fixed;
+    background-position:center;
+    background-size:cover;
+    letter-spacing:1px;
+    text-align:start;
+    font-size:13px;
+    line-height:20px;
+    font-family:'PT Serif', serif;
+    margin:0 auto;
+    color:black;
+}
+
+html{
+    overflow:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+
+html::-webkit-scrollbar{
+    display:none;
+}
+
+#main{
+    position:relative;
+    width:1000px;
+    margin:50px auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.body{
+    position:relative;
+    height:auto;
+    width:1000px;
+    padding:10px;
+    box-sizing:border-box;
+    background-color:white;
+    border-radius:15px;
+    margin-bottom:10px;
+}
+
+.banner{
+    background-image:url('https://file.garden/aZo5FVsRbiDb3nc-/finland/eduskunta%201995.png');
+    background-position:center;
+    background-size:cover;
+    height:220px;
+    width:100%;
+    border-radius:10px;
+    border:1px solid black;
+}
+
+.content{
+    height:auto;
+    width:100%;
+    margin:10px auto;
+    display:flex;
+    justify-content:space-between;
+    flex-direction:row;
+}
+
+.bandbanner{
+    height:auto;
+    width:100%;
+    background-color:blue;
+    font-size:30px;
+    padding:10px;
+    box-sizing:border-box;
+    color:white;
+    text-align:center;
+    margin:10px auto;
+}
+
+.map{
+    background-color:lightblue;
+    position:relative;
+    height:520px;
+    width:700px;
+    border-radius:10px;
+    border:3px black double;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+    box-sizing:border-box;
+}
+
+#finland-map {
+    display:block;
+    width:100%;
+    height:100%;
+}
+
+.buttonsforsmalldistricts{
+    position:relative;
+    height:auto;
+    width:auto;
+    text-align:center;
+}
+
+button{
+    width:100%;
+}
+
+.rightside{
+    height:auto;
+    width:250px;
+}
+
+.info{
+    position:relative;
+    width:250px;
+    height:100%;
+    padding:5px;
+    box-sizing:border-box;
+    border-radius:10px;
+    border:3px black double;
+    text-align:center;
+    font-size:10px;
+}
+
+.candidatelineup{
+    width:100%;
+    height:300px;
+    display:flex;
+    align-items:center;
+    justify-content:space-evenly;
+}
+
+.candidate{
+    width:auto;
+    height:auto;
+    border:1px solid black;
+    border-radius:10px;
+    cursor:pointer;
+    text-align:center;
+}
+
+.candidate:hover{
+    transform:scale(1.05);
+}
+
+.candidateinfo{
+    height:auto;
+    width:100%;
+    padding:8px;
+    box-sizing:border-box;
+    text-align:start;
+    border:3px double black;
+    border-radius:10px;
+}
+
+.ticketdisplay{
+    height:auto;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:20px;
+}
+
+.ticketphoto{
+    height:auto;
+    width:auto;
+    border:1px solid black;
+}
+
+.ticketbanner{
+    height:80px;
+    width:300px;
+    background-color:blue;
+    border:20px solid red;
+    text-align:center;
+    color:white;
+    font-size:30px;
+    line-height:40px;
+    padding:6px;
+}
+
+.actions{
+    height:auto;
+    width:100%;
+    text-align:center;
+    font-size:10px;
+    margin-top:5px;
+}
+
+.candidaterow{
+    height:auto;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    align-items:center;
+}
+
+.partycolour{
+    height:15px;
+    width:15px;
+}
+
+.eventpopup{
+    position:absolute;
+    height:auto;
+    width:400px;
+    padding:16px;
+    box-sizing:border-box;
+    border:3px double black;
+    border-radius:10px;
+    background-color:white;
+    z-index:1000;
+    top:450px;
+    left:30%;
+}
+
+#eventcontent{
+    height:auto;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+
+.partylogo{
+    height:100px;
+    width:100px;
+}
+
+.eventtext{
+    height:auto;
+    width: 240px;
+}
+
+.coalitionformingGUI{
+    position:absolute;
+    height:670px;
+    width:700px;
+    top:350px;
+    left:14%;
+    box-sizing:border-box;
+    padding:16px;
+    border:3px double black;
+    border-radius:10px;
+    background-color:white;
+    z-index:1000;
+}
+
+.coalitionheader{
+    position:relative;
+    height:100px;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.coalitioncontent{
+    position:relative;
+    height:250px;
+    width:100%;
+}
+
+.coalitionpartyrow{
+    position:relative;
+    height:30px;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.coalitionpartyrelations{
+    height:auto;
+    width:100%;
+    position:relative;
+    border-top:1px solid black;
+    padding:10px;
+    box-sizing:border-box;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-evenly;
+    margin-top:10px;
+    flex-wrap:wrap;
+}
+
+.relationsheader{
+    height:auto;
+    width:100%;
+    font-size:20px;
+    margin:5px;
+    text-align:center;
+}
+
+.relationscolumn{
+    height:auto;
+    width:150px;
+    text-align:center;
+}
+
+.partybar{
+    position:relative;
+    height:100%;
+    width:20px;
+    color:white;
+    background-color:#3AAD2E;
+    display:flex;
+    align-items:center;
+    box-sizing:border-box;
+    padding:5px;
+    max-width:480px
+}
+
+.leftside{
+    height:auto;
+    width:700px;
+}
+
+.partycolumn{
+    height:auto;
+    width:100%;
+}
+
+.endingslide{
+    position:absolute;
+    top:290px;
+    left:5%;
+    height:725px;
+    width: 890px;
+    background-color:white;
+    padding:9px;
+    box-sizing:border-box;
+    z-index:1000;
+    border:3px double black;
+    font-family:'Playfair', serif;
+}
+
+.endingslidecontent{
+    position:relative;
+    height:100%;
+    width:100%;
+}
+
+.exitbar{
+    position:relative;
+    width:100%;
+    height:15px;
+    display:flex;
+    justify-content:flex-end;
+}
+
+.clicktoexit{
+    height:auto;
+    width:auto;
+    position:relative;
+    cursor:pointer;
+}
+
+.newspapertop{
+    position:relative;
+    width:100%;
+    height:auto;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    border-bottom:1px solid black;
+    padding:5px;
+    box-sizing:border-box;
+}
+
+.date{
+    width:100%;
+    height:15px;
+    display:flex;
+    justify-content:center;
+    margin-top:3px;
+}
+
+.newspapercontent{
+    position:relative;
+    width:100%;
+    height:600px;
+    display:flex;
+    align-items:stretch;
+    justify-content:space-between;
+    margin-top:10px;
+}
+
+.maintextcontent{
+    position:relative;
+    height:100%;
+    width:225px;
+    padding:9px;
+    box-sizing:border-box;
+    border-right:1px solid black;
+}
+
+.mainadcontent{
+    position:relative;
+    height:100%;
+    width:225px;
+    padding:9px;
+    box-sizing:border-box;
+    border-left:1px solid black;
+}
+
+.mainimagecontent{
+    position:relative;
+    height:100%;
+    width:400px;
+    padding:9px;
+    box-sizing:border-box;
+}
+
+.mainadtitlecard{
+    position:relative;
+    height:25px;
+    width:100%;
+    padding:3px;
+    box-sizing:border-box;
+    background-color:black;
+    color:white;
+    font-family:'Noto Sans', sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:5px;
+    margin-bottom:10px;
+}
+
+.adbox{
+    position:relative;
+    width:100%;
+    height:210px;
+    background-color:white;
+    border:1px solid black;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:4px;
+    padding:6px;
+    box-sizing:border-box;
+    align-items:flex-start;
+}
+
+.debateevent{
+    position:absolute;
+    width:600px;
+    height:auto;
+    background-color:white;
+    border:3px double black;
+    top:330px;
+    left:20%;
+    z-index:1000;
+    padding:10px;
+    box-sizing:border-box;
+}
+
+.debatecontent{
+    position:relative;
+    width:100%;
+    height:310px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+.debateresponses{
+    position:relative;
+    height:100%;
+    width:220px;
+    border:1px solid black;
+    border-radius:10px;
+    padding:10px;
+    box-sizing:border-box;
+    overflow:auto;
+}
+
+.debateimage{
+    position:relative;
+    height:100%;
+    width:450px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.debateheadercontent{
+    position:relative;
+    width:100%;
+    height:75px;
+    padding:10px;
+    box-sizing:border-box;
+}
