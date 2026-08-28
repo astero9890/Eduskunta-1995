@@ -875,10 +875,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         if (gameState.funds > 500000) {
-            alert("You are holding far too much campaign cash. Spend it before continuing to the next turn.");
+            alert("Your campaign is accumulating unused funds. Consider spending it.");
         }
         if (gameState.funds > 650000) {
-            alert("Your campaign is accumulating unused funds. Consider spending it.");
+            alert("You are holding far too much campaign cash. Spend it before continuing to the next turn.");
         }
 
         if (gameState.debate.active) {
