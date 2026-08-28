@@ -2940,11 +2940,11 @@ document.addEventListener('DOMContentLoaded', () => {
         for (const partyId of coalition) {
             if (partyId === gameState.party) continue;
             const relation = getPartyRelation(gameState.party, partyId);
-            if (relation < 15) {
+            if (relation < 12) {
                 alert(
                     `You cannot form a government with ${partyId}.` +
                     `Your relations are only ${relation}.` +
-                    `You need at least 15.` 
+                    `You need at least 12.` 
                 );
                 return;
             }
@@ -3054,7 +3054,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Object.keys(seats).forEach(partyId => {
             if (partyId === playerParty) return;
             const relation = getPartyRelation(playerParty, partyId);
-            if (relation >= 15) {
+            if (relation >= 12) {
                 possibleSeats += seats[partyId] || 0;
                 possiblePartners.push(partyId);
             }
