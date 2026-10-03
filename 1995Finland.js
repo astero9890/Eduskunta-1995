@@ -2915,6 +2915,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return gameState.partyRelations[partyA][partyB];
     }
 
+    function getIdeologicalCompatibility(partyA, partyB) {
+        const a = ALL_PARTIES[partyA];
+        const b = ALL_PARTIES[partyB];
+
+        if (!a || !b || !a.ideology || !b.ideology) {
+            return 0;
+        }
+        const socialDistance = Math.abs(
+            a.ideology.social - b.ideology.special
+        );
+        const economicDistance = Math.abs(
+            a.ideology.economic - b.ideology.economic
+        );
+        const totalDistance = socialDistance + economicDistance;
+        return 6 - totalDistance;
+    }
+
     function getSelectedCoalition() {
         const coalition = [gameState.party];
         document.querySelectorAll(".coalitionpartyrow input[type='checkbox']:checked").forEach(checkbox => {
@@ -2938,6 +2955,50 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("projectedcoalition").textContent = seats;
     }
 
+    function getCoalitionAcceptanceChance(playerParty, targetParty) {
+        const relation = getPartyRelation(playerParty, targetParty);
+        if (relation >= 12) {
+            return 100;
+        }
+        const compatibility = getIdeologicalCompatibility(
+            playerParty,
+            targetParty
+        );
+
+        let chance = 50;
+
+        chance += relation * 2;
+        chance += compatibility * 4;
+        chance = Math.max(5, Math.min(95, chance));
+        return chance;
+    }
+
+    function negotiateWithParty(targetParty) {
+        const playerParty = gameState.party;
+        const relation = getPartyRelation(
+            playerParty,
+            targetParty
+        );
+        const compatibility = getIdeologicalCompatibility(
+            playerParty,
+            targetParty
+        );
+        const chance = getCoalitionAcceptanceChance(
+            playerParty,
+            targetParty
+        );
+        const roll = Math.random() * 100;
+        const accepted = roll < chance;
+
+        return {
+            accepted,
+            relation,
+            compatibility,
+            chance,
+            roll
+        };
+    }
+
     document.querySelectorAll(
         ".coalitionpartyrow input[type='checkbox']"
     ).forEach(checkbox => {
@@ -2953,28 +3014,50 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const unwillingParties = [];
+        const acceptedParties = [gameState.party];
+
         for (const partyId of coalition) {
             if (partyId === gameState.party) continue;
-            const relation = getPartyRelation(gameState.party, partyId);
-            if (relation < 12) {
-                alert(
-                    `You cannot form a government with ${partyId}.` +
-                    `Your relations are only ${relation}.` +
-                    `You need at least 12.` 
-                );
-                return;
+            const negotiation = negotiateWithParty(partyId);
+            console.log(
+                `${partyId} coalition negotiation:`,
+                negotiation
+            );
+
+            if (negotiation.accepted) {
+                acceptedParties.push(partyId);
+            } else {
+                unwillingParties.push({
+                    partyId,
+                    relation: negotiation.relation,
+                    compatibility: negotiation.compatibility,
+                    chance: negotiation.chance
+                });
             }
         }
 
-        gameState.coalition = coalition;
+        if (unwillingParties.length > 0) {
+            const names = unwillingParties.map(party => {
+                return ALL_PARTIES[party.partyId]?.name || party.partyId;
+            });
+            alert(
+                `Coalition negotiations have failed.\n\n` +
+                `${names.join(", ")} ` +
+                `declined to enter the government.`
+            )
+        }
+
+        gameState.coalition = acceptedParties;
         gameState.governmentFormed = true;
         gameState.governmentType = "majority";
+        const finalSeats = calculateCoalitionSeats(acceptedParties);
         alert(
             `Government formed!\n\n` +
-            `Coalition: ${coalition.join(", ")}\n` +
-            `Seats: ${seats}\n\n` +
+            `Coalition: ${acceptedParties.join(", ")}\n` +
+            `Seats: ${finalSeats}` +
             `This is a majority government.`
-        );
+        )
 
         document.querySelector(".coalitionformingGUI").style.display = "none";
         showEnding();
