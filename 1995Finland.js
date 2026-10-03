@@ -410,6 +410,21 @@ function ideologyKey(text) {
         .replaceAll(" ", "_");
 }
 
+function ideologyDisplayName(ideology) {
+    const names = {
+        EXTREME_LEFT: "Extreme left",
+        LEFT: "Left",
+        CENTER_LEFT: "Centre left",
+        CENTER: "Centre",
+        CENTER_RIGHT: "Centre right",
+        RIGHT: "Right",
+        EXTREME_RIGHT: "Extreme right",
+    };
+
+    const key = ideologyKey(ideology);
+    return names[key] || ideology || "No data :(";
+}
+
 // ===== ACTUAL DOCUMENT CONTENT =====
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -513,8 +528,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function showDistrictInfo(district) {
         gameState.selectedDistrict = district.id;
         document.getElementById("districtname").textContent = district.dataset.name || district.id;
-        document.getElementById("socialideology").textContent = district.dataset.socialIdeology || "No Data :(";
-        document.getElementById("economicideology").textContent = district.dataset.economicIdeology || "No Data :(";
+        document.getElementById("socialideology").textContent = ideologyDisplayName(district.dataset.socialIdeology);
+        document.getElementById("economicideology").textContent = ideologyDisplayName(district.dataset.economicIdeology);
         document.getElementById("seats").textContent = district.dataset.seats || "No Data :(";
 
         const alandOnly = document.getElementById("ALANDONLY");
