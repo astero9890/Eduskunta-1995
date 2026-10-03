@@ -3149,11 +3149,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let possibleSeats = seats[playerParty] || 0;
         const possiblePartners = [];
-
         Object.keys(seats).forEach(partyId => {
             if (partyId === playerParty) return;
-            const relation = getPartyRelation(playerParty, partyId);
-            if (relation >= 12) {
+            const chance = getCoalitionAcceptanceChance(
+                playerParty,
+                partyId
+            );
+            if (chance >= 50) {
                 possibleSeats += seats[partyId] || 0;
                 possiblePartners.push(partyId);
             }
