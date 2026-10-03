@@ -2923,7 +2923,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return 0;
         }
         const socialDistance = Math.abs(
-            a.ideology.social - b.ideology.special
+            a.ideology.social - b.ideology.social
         );
         const economicDistance = Math.abs(
             a.ideology.economic - b.ideology.economic
@@ -3007,61 +3007,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById("formgovernment").addEventListener("click", () => {
         const coalition = getSelectedCoalition();
-        const seats = calculateCoalitionSeats(coalition);
-
-        if (seats < 101) {
-            alert(`You need 101 seats to form a government. Your coalition currently have ${seats} seats`);
-            return;
-        }
 
         const unwillingParties = [];
         const acceptedParties = [gameState.party];
 
         for (const partyId of coalition) {
             if (partyId === gameState.party) continue;
-            const negotiation = negotiateWithParty(partyId);
-            console.log(
-                `${partyId} coalition negotiation:`,
-                negotiation
-            );
 
-            if (negotiation.accepted) {
-                acceptedParties.push(partyId);
-            } else {
-                unwillingParties.push({
-                    partyId,
-                    relation: negotiation.relation,
-                    compatibility: negotiation.compatibility,
-                    chance: negotiation.chance
-                });
-            }
-        }
+        const negotiation = negotiateWithParty(partyId);
 
-        if (unwillingParties.length > 0) {
-            const names = unwillingParties.map(party => {
-                return ALL_PARTIES[party.partyId]?.name || party.partyId;
+        console.log(
+            `${partyId} coalition negotiation:`,
+            negotiation
+        );
+
+        if (negotiation.accepted) {
+            acceptedParties.push(partyId);
+        } else {
+            unwillingParties.push({
+                partyId,
+                relation: negotiation.relation,
+                compatibility: negotiation.compatibility,
+                chance: negotiation.chance
             });
-            alert(
-                `Coalition negotiations have failed.\n\n` +
-                `${names.join(", ")} ` +
-                `declined to enter the government.`
-            )
         }
+    }
 
-        gameState.coalition = acceptedParties;
-        gameState.governmentFormed = true;
-        gameState.governmentType = "majority";
-        const finalSeats = calculateCoalitionSeats(acceptedParties);
+    const finalSeats = calculateCoalitionSeats(acceptedParties);
+
+    if (unwillingParties.length > 0) {
+        const names = unwillingParties.map(party => {
+            return ALL_PARTIES[party.partyId]?.name || party.partyId;
+        });
+
         alert(
-            `Government formed!\n\n` +
-            `Coalition: ${acceptedParties.join(", ")}\n` +
-            `Seats: ${finalSeats}` +
-            `This is a majority government.`
-        )
+            `Coalition negotiations have concluded.\n\n` +
+            `${names.join(", ")} ` +
+            `${names.length === 1 ? "has" : "have"} declined to enter the government.\n\n` +
+            `The remaining coalition has ${finalSeats} seats.`
+        );
+    }
 
-        document.querySelector(".coalitionformingGUI").style.display = "none";
-        showEnding();
-    });
+    if (finalSeats < 101) {
+        alert(
+            `The coalition cannot form a majority government.\n\n` +
+            `The remaining coalition has only ${finalSeats} seats.\n` +
+            `At least 101 seats are required.`
+        );
+
+        return;
+    }
+
+    // Government successfully forms
+    gameState.coalition = acceptedParties;
+    gameState.governmentFormed = true;
+    gameState.governmentType = "majority";
+
+    alert(
+        `Government formed!\n\n` +
+        `Coalition: ${acceptedParties.join(", ")}\n` +
+        `Seats: ${finalSeats}\n\n` +
+        `This is a majority government.`
+    );
+
+    document.querySelector(".coalitionformingGUI").style.display = "none";
+    showEnding();
+});
 
     document.getElementById("formminoritygovernment").addEventListener("click", () => {
         const playerParty = gameState.party;
